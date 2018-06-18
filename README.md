@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/charleyza/FizzBuzz.svg?branch=master)](https://travis-ci.com/charleyza/FizzBuzz)
+
 # What is FizzBuzz?
 
 A popular interview question is the "FizzBuzz test", its based on a children's game where you count from 1 to 100 and for multiples of 3 say 'Fizz', multiples of 5 say "Buzz", if both say 'FizzBuzz' else say the number, example 8.
