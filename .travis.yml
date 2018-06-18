@@ -1,0 +1,6 @@
+language: csharp
+solution: FizzBuzz.sln
+
+matrix:
+  include:
+    - dotnet: 2.0
