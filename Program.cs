@@ -8,37 +8,17 @@ namespace FizzBuzz
         {
             var lowerBound = Environment.GetEnvironmentVariable("lowerBound") == null ? 1 : Convert.ToInt32(Environment.GetEnvironmentVariable("lowerBound"));
             var upperBound = Environment.GetEnvironmentVariable("upperBound") == null ? 100 : Convert.ToInt32(Environment.GetEnvironmentVariable("upperBound"));
-
             var fizzAt = Environment.GetEnvironmentVariable("fizzAt") == null ? 3 : Convert.ToInt32(Environment.GetEnvironmentVariable("fizzAt"));
             var buzzAt = Environment.GetEnvironmentVariable("buzzAt") == null ? 5 : Convert.ToInt32(Environment.GetEnvironmentVariable("buzzAt"));
+            var apiUrl = Environment.GetEnvironmentVariable("apiUrl");
 
-            var outPut = "";
+            apiUrl = "http://192.168.31.129:3000";
 
-            Console.WriteLine("------------------------------");
-            Console.WriteLine("Running FizzBuzz: lowerBound={0} upperBound={1} fizzAt={2} buzzAt={3}",
-                lowerBound,
-                upperBound,
-                fizzAt,
-                buzzAt);
-            Console.WriteLine("------------------------------");
+            var objData = new GenerateData(lowerBound, upperBound, fizzAt, buzzAt);
+            objData.Go();
 
-            for (int i = lowerBound; i <= upperBound; i++)
-            {
-                if (i % fizzAt == 0)
-                    outPut = "FIZZ";
-
-                if (i % buzzAt == 0)
-                    outPut += "BUZZ";
-
-                if (outPut.Equals(""))
-                    Console.WriteLine(i);
-                else
-                    Console.WriteLine(outPut);
-
-                outPut = "";
-            }
-
-            Console.WriteLine("------------------------------");
+            new CallApi(lowerBound, upperBound, fizzAt, buzzAt, apiUrl, objData.Data)
+                .Go();
         }
     }
 }
