@@ -9,8 +9,9 @@ namespace FizzBuzz
         [DataMember]
         public string id { get; set; }
 
-        [DataMember]
-        public DateTime insert_date { get; set; }
+        //TODO ~ handel datetime deserialization
+        //[DataMember]
+        //public DateTime insert_date { get; set; }
     }
 
     [DataContract]

@@ -51,11 +51,22 @@ namespace FizzBuzz
                 //read event id
                 endPoint = string.Format("{0}/fizzbuzz_event?order=id.desc&limit=1", ApiUrl);
                 response = DoCall("[]", endPoint, Verb.get);
-                var result = response.Content.ReadAsStringAsync().Result;
-                var newObj = DeSerialize<FizzbuzzEvent>(result); //TODO ~ this doesnt deserialize for reasons?
+                var result = response.Content.ReadAsStringAsync()
+                    .Result;
+                var newObj = DeSerialize<FizzbuzzEvent>(result);
 
                 //insert event data lines
-                //TODO
+                endPoint = string.Format("{0}/fizzbuzz_data", ApiUrl);
+                foreach (var item in Data)
+                {
+                    var objData = new FizzbuzzData()
+                    {
+                        fizzbuzz_event_id = newObj.id,
+                        val = item
+                    };
+                    var jsonData = Serialize<FizzbuzzData>(objData);
+                    DoCall(jsonData, endPoint, Verb.post);
+                }
             }
             catch (Exception ex)
             {
@@ -67,7 +78,11 @@ namespace FizzBuzz
         #region helpers
         public T DeSerialize<T>(string result)
         {
-            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(result)))
+            var json = result
+                .Replace("[", "")
+                .Replace("]", ""); //api returns an array, manually clean it up for de-serialize
+
+            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(json)))
             {
                 ms.Position = 0;
                 var js = new DataContractJsonSerializer(typeof(T));

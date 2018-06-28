@@ -12,11 +12,15 @@ namespace FizzBuzz
             var buzzAt = Environment.GetEnvironmentVariable("buzzAt") == null ? 5 : Convert.ToInt32(Environment.GetEnvironmentVariable("buzzAt"));
             var apiUrl = Environment.GetEnvironmentVariable("apiUrl");
 
-            apiUrl = "http://192.168.31.129:3000";
+            //debug
+            //apiUrl = "http://192.168.31.129:3000";
 
+            //generate and display the data
             var objData = new GenerateData(lowerBound, upperBound, fizzAt, buzzAt);
             objData.Go();
 
+            //persist the data to a web api
+            //used with docker compose - https://github.com/charleyza/DockerCompose        
             new CallApi(lowerBound, upperBound, fizzAt, buzzAt, apiUrl, objData.Data)
                 .Go();
         }
